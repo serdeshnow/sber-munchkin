@@ -1,5 +1,10 @@
 import { createRoot } from 'react-dom/client';
+import { HeroUIProvider } from '@heroui/react';
+import { App } from '@app/App.tsx';
 import '@styles/index.css';
-import { Assistant } from '@shared/lib/voiceAssistant.tsx';
 
-createRoot(document.getElementById('root')!).render(<Assistant />);
+createRoot(document.getElementById('root')!).render(
+  <HeroUIProvider>
+    <App/>
+  </HeroUIProvider>,
+);
