@@ -1,10 +1,10 @@
 // src/app/App.tsx
-import React from 'react';
+// import React from 'react';
 import { PlayerList } from '../features/playerList/PlayerList';
-import { useVoiceCommands } from '../features/voiceCommands/useVoiceCommands';
+// import { useVoiceCommands } from '../features/voiceCommands/useVoiceCommands';
 
 export default function App() {
-  useVoiceCommands();
+  // useVoiceCommands();
   return (
     <div className="min-h-screen bg-green-200 p-6">
       <header className="flex justify-between items-center mb-4">

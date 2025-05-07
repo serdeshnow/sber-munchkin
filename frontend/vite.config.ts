@@ -7,6 +7,9 @@ import svgr from "vite-plugin-svgr";
 
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    'window.AssistantHost': 'window.AssistantHost',
+  },
   plugins: [
     react(),
     tsconfigPaths(),

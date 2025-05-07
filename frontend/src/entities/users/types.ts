@@ -6,5 +6,5 @@ export interface PlayerSession {
 }
 export interface UserRecord {
   id: number;
-  session: PlayerSession;
+  session: PlayerSession[];
 }
