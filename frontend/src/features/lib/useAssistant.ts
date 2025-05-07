@@ -13,7 +13,7 @@ export const useAssistant = () => {
   ]);
   const assistantRef = useRef<any>(null);
 
-  // 1) формируем state для ассистента
+  // Состояние для ассистента
   const getState = useCallback<() => AppState>(
     () => ({
       item_selector: {
@@ -27,13 +27,18 @@ export const useAssistant = () => {
     [users],
   );
 
-  // 2) CRUD-колбэки
+  // CRUD-методы
   const resetGame = useCallback(() => {
     setUsers(prev => prev.map(u => ({ ...u, level: 1, power: 1 })));
   }, []);
 
   const addUser = useCallback((username: string) => {
-    setUsers(prev => [...prev, { username, level: 1, power: 1 }]);
+    setUsers(prev => {
+      if (prev.length >= 7) {
+        throw new Error('MaxPlayers');
+      }
+      return [...prev, { username, level: 1, power: 1 }];
+    });
   }, []);
 
   const deleteUser = useCallback((username: string) => {
@@ -50,7 +55,7 @@ export const useAssistant = () => {
     setUsers(prev =>
       prev.map(u =>
         u.username === username
-          ? { ...u, level: u.level + delta, power: u.power + delta }
+          ? { ...u, level: Math.max(1, u.level + delta) }
           : u
       )
     );
@@ -58,63 +63,65 @@ export const useAssistant = () => {
 
   const changePower = useCallback((username: string, delta: number) => {
     setUsers(prev =>
-      prev.map(u => (u.username === username ? { ...u, power: u.power + delta } : u))
+      prev.map(u =>
+        u.username === username
+          ? { ...u, power: Math.max(0, u.power + delta) }
+          : u
+      )
     );
   }, []);
 
-  // 3) диспетчер для событий ассистента
+  // Диспетчер событий ассистента
   const dispatchAssistantAction = useCallback(
     (action: AssistantAction) => {
-      switch (action.type as ActionType) {
-        case 'reset_game':
-          resetGame();
-          break;
-        case 'add_user':
-          action.username && addUser(action.username);
-          break;
-        case 'delete_user':
-          action.username && deleteUser(action.username);
-          break;
-        case 'rename_user':
-          action.username && action.newUsername && renameUser(action.username, action.newUsername);
-          break;
-        case 'increase_user_level':
-          action.username && changeLevel(action.username, 1);
-          break;
-        case 'decrease_user_level':
-          action.username && changeLevel(action.username, -1);
-          break;
-        case 'increase_user_power':
-          action.username && action.power && changePower(action.username, Number(action.power));
-          break;
-        case 'decrease_user_power':
-          action.username && action.power && changePower(action.username, -Number(action.power));
-          break;
-        default:
-          console.warn('Unknown action:', action.type);
+      try {
+        switch (action.type as ActionType) {
+          case 'reset_game':     resetGame(); break;
+          case 'add_user':       action.username && addUser(action.username); break;
+          case 'delete_user':    action.username && deleteUser(action.username); break;
+          case 'rename_user':    action.username && action.newUsername && renameUser(action.username, action.newUsername); break;
+          case 'increase_user_level': action.username && changeLevel(action.username, +1); break;
+          case 'decrease_user_level': action.username && changeLevel(action.username, -1); break;
+          case 'increase_user_power': action.username && action.power && changePower(action.username, +Number(action.power)); break;
+          case 'decrease_user_power': action.username && action.power && changePower(action.username, -Number(action.power)); break;
+          default: console.warn('Unknown action:', action.type);
+        }
+      } catch (e: any) {
+        if (e.message === 'MaxPlayers') {
+          // сюда можно вставить callback или внешнее оповещение
+          console.warn('Нельзя добавить больше 7 игроков');
+        } else {
+          throw e;
+        }
       }
     },
     [resetGame, addUser, deleteUser, renameUser, changeLevel, changePower],
   );
 
-  // 4) инициализация ассистента
+  // Инициализация ассистента
   useEffect(() => {
     const assistant = initializeAssistant(getState);
     assistantRef.current = assistant;
 
-    assistant.on('data', (event: any) => {
-      if (event.action) dispatchAssistantAction(event.action);
+    assistant.on('data', ({ action }: any) => {
+      action && dispatchAssistantAction(action);
     });
-    assistant.on('start', () => console.log('assistant.on(start)', assistant.getInitialData()));
-    assistant.on('command', console.log);
+    assistant.on('start', () => console.log('assistant.start', assistant.getInitialData()));
     assistant.on('error', console.error);
-    assistant.on('tts', console.log);
 
     return () => {
-      // при необходимости почистить
       assistantRef.current = null;
     };
   }, [getState, dispatchAssistantAction]);
 
-  return { users };
+  return {
+    users,
+    // UI-методы
+    resetGame,
+    addUser,
+    deleteUser,
+    renameUser,
+    changeLevel,
+    changePower,
+  };
 };
