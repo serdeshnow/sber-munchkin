@@ -20,7 +20,6 @@ import ArrowIcon from '@assets/img/arrow.svg?react';
 import UploadIcon from '@assets/img/upload.svg?react';
 import AddCircle from '@assets/img/add_circle.svg?react';
 
-
 /** Типы */
 export type IconType =
   | 'plus'
@@ -41,7 +40,6 @@ export type IconType =
   | 'arrow'
   | 'upload'
   | 'add_circle';
-
 
 /** Пропсы компонента */
 interface IconProps {

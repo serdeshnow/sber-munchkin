@@ -3,7 +3,7 @@ import cn from 'classnames';
 
 export type CardVariant = 'primary' | 'transparent';
 
-const variantMap: Record<CardVariant, { bg: string, shadow: string }> = {
+const variantMap: Record<CardVariant, { bg: string; shadow: string }> = {
   primary: { bg: 'bg-white', shadow: 'shadow-default' },
   transparent: { bg: 'bg-transparent', shadow: 'shadow-none' },
 };
@@ -21,7 +21,15 @@ export const Card: React.FC<CardProps> = ({
   const selectedVariant = variantMap[variant];
 
   return (
-    <div className={cn(selectedVariant.bg, selectedVariant.shadow, 'rounded-2xl p-8', className)} {...props}>
+    <div
+      className={cn(
+        selectedVariant.bg,
+        selectedVariant.shadow,
+        'rounded-2xl p-8',
+        className,
+      )}
+      {...props}
+    >
       {children}
     </div>
   );

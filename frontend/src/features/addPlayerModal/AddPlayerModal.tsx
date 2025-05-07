@@ -1,15 +1,15 @@
 // src/features/addPlayerModal/AddPlayerModal.tsx
 import React, { useState } from 'react';
-import { Modal } from '../../shared/ui/Modal';
-import { Button } from '../../shared/ui/Button';
-import type { PlayerSession } from '../../entities/users/types';
+import { Modal } from '@shared/ui/Modal';
+import { Button } from '@shared/ui/Button';
+import type { PlayerSession } from '@entities/users/types';
 
 interface Props {
-  open: boolean;
+  isOpen: boolean;
   onAdd: (session: PlayerSession) => void;
   onClose: () => void;
 }
-export const AddPlayerModal: React.FC<Props> = ({ open, onAdd, onClose }) => {
+export const AddPlayerModal: React.FC<Props> = ({ isOpen, onAdd, onClose }) => {
   const [name, setName] = useState('');
   const [level, setLevel] = useState(1);
   const [power, setPower] = useState(1);
@@ -24,7 +24,7 @@ export const AddPlayerModal: React.FC<Props> = ({ open, onAdd, onClose }) => {
   }
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <h3 className="text-xl mb-4">Добавить игрока</h3>
       <input
         className="w-full mb-2 p-2 rounded text-black"

@@ -1,8 +1,8 @@
 // src/features/playerList/PlayerList.tsx
 import React, { useEffect, useState } from 'react';
-import { getAllUsers, addUser, updateUser, deleteUser } from '../../entities/users/model';
-import type { UserRecord, PlayerSession } from '../../entities/users/types';
-import { Button } from '../../shared/ui/Button';
+import { getAllUsers, addUser, updateUser, deleteUser } from '@entities/users/model';
+import type { UserRecord, PlayerSession } from '@entities/users/types';
+import { Button } from '@shared/ui/Button';
 import { AddPlayerModal } from '../addPlayerModal/AddPlayerModal';
 import { ConfirmDialog } from '../confirmDialog/ConfirmDialog';
 
@@ -14,6 +14,7 @@ export const PlayerList: React.FC = () => {
   function reload() {
     setUsers(getAllUsers());
   }
+
   useEffect(reload, []);
 
   const handleAdd = (sess: PlayerSession) => {
@@ -43,27 +44,27 @@ export const PlayerList: React.FC = () => {
           <div className="space-x-1">
             <Button
               onClick={() =>
-                handleUpdate(u.id, { level: Math.max(1, u.session.level - 1) })
+                handleUpdate(u.id, {level: Math.max(1, u.session.level - 1)})
               }
             >
               - ур
             </Button>
-            <Button onClick={() => handleUpdate(u.id, { level: u.session.level + 1 })}>
+            <Button onClick={() => handleUpdate(u.id, {level: u.session.level + 1})}>
               + ур
             </Button>
             <Button
               onClick={() =>
-                handleUpdate(u.id, { power: Math.max(1, u.session.power - 1) })
+                handleUpdate(u.id, {power: Math.max(1, u.session.power - 1)})
               }
             >
               - мощь
             </Button>
-            <Button onClick={() => handleUpdate(u.id, { power: u.session.power + 1 })}>
+            <Button onClick={() => handleUpdate(u.id, {power: u.session.power + 1})}>
               + мощь
             </Button>
             <Button
               onClick={() =>
-                setConfirm({ id: u.id, title: `Удалить игрока ${u.session.username}?` })
+                setConfirm({id: u.id, title: `Удалить игрока ${u.session.username}?`})
               }
             >
               Удалить

@@ -7,8 +7,6 @@
 // import { Title } from '@shared/ui';
 
 export const HomePage = () => {
-
-
   return (
     <>
       <div>HOMEPAGE</div>
