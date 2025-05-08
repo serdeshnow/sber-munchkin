@@ -4,7 +4,7 @@ import cn from 'classnames';
 export type CardVariant = 'primary' | 'transparent';
 
 const variantMap: Record<CardVariant, { bg: string; shadow: string }> = {
-  primary: { bg: 'bg-white', shadow: 'shadow-default' },
+  primary: { bg: 'bg-dark-gray-500', shadow: 'shadow-default' },
   transparent: { bg: 'bg-transparent', shadow: 'shadow-none' },
 };
 

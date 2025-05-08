@@ -1,17 +1,12 @@
 import React, { useState } from 'react';
 import { useAssistant } from '@features/assistant';
 import { Button, Icon, Modal } from '@shared/ui';
+import { UserCard } from '@entities/users';
+import { Header } from '@widgets/header';
 
 export const GamePage: React.FC = () => {
-  const {
-    users,
-    addUser,
-    deleteUser,
-    renameUser,
-    resetGame,
-    changeLevel,
-    changePower,
-  } = useAssistant();
+  const { users, addUser, deleteUser, renameUser, resetGame, changeLevel, changePower } =
+    useAssistant();
 
   // Локальный state для модалок
   const [isConfirmModal, setConfirmModal] = useState<{
@@ -40,45 +35,12 @@ export const GamePage: React.FC = () => {
   };
 
   return (
-    <div className="p-8 space-y-4">
-      <div className="flex space-x-2">
-        <Button color="primary" onClick={() => setAddModalOpen(true)}>
-          <Icon type="plus" /> Добавить игрока
-        </Button>
-        <Button
-          color="error"
-          onClick={() => setConfirmModal({ type: 'reset', open: true })}
-        >
-          Сбросить игру
-        </Button>
-      </div>
-
+    <div className="p-8 space-y-4 h-full">
+      <Header />
       {/* Список игроков */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {users.map(u => (
-          <div key={u.username} className="p-4 bg-secondary-600 rounded-lg">
-            <div className="flex justify-between items-center">
-              <div>
-                <div className="font-bold">{u.username}</div>
-                <div>Уровень: {u.level}</div>
-                <div>Сила: {u.power}</div>
-              </div>
-              <div className="flex space-x-2">
-                <Icon type="edit" onClick={() => {
-                  setTargetUser(u.username);
-                  setAddModalOpen(true);
-                  setNewName(u.username);
-                }} />
-                <Icon type="trash" onClick={() => onDeleteClick(u.username)} />
-              </div>
-            </div>
-            <div className="mt-2 flex space-x-1">
-              <Button size="sm" onClick={() => changeLevel(u.username, -1)}>- lvl</Button>
-              <Button size="sm" onClick={() => changeLevel(u.username, +1)}>+ lvl</Button>
-              <Button size="sm" onClick={() => changePower(u.username, -1)}>- pow</Button>
-              <Button size="sm" onClick={() => changePower(u.username, +1)}>+ pow</Button>
-            </div>
-          </div>
+        {users.map((u) => (
+          <UserCard user={u} />
         ))}
       </div>
 
@@ -93,7 +55,10 @@ export const GamePage: React.FC = () => {
         }
       >
         <div className="space-x-2 flex justify-end">
-          <Button variant="solid" onClick={() => setConfirmModal({ ...isConfirmModal, open: false })}>
+          <Button
+            variant="solid"
+            onClick={() => setConfirmModal({ ...isConfirmModal, open: false })}
+          >
             Отмена
           </Button>
           <Button color="error" onClick={onConfirm}>
@@ -116,7 +81,7 @@ export const GamePage: React.FC = () => {
           <input
             className="w-full p-2 border rounded"
             value={newName}
-            onChange={e => setNewName(e.target.value)}
+            onChange={(e) => setNewName(e.target.value)}
             placeholder="Имя игрока"
           />
           <div className="flex justify-end space-x-2">

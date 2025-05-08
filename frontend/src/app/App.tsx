@@ -1,10 +1,10 @@
-import { GamePage } from '@pages/Page.tsx';
-import { Button } from '@heroui/react';
+import React from 'react';
+import { GamePage } from '@pages/game/Page.tsx';
 
-export const App = () => {
+
+export const App: React.FC = () => {
   return (
     <>
-      <Button>BUTTOn</Button>
       <GamePage/>
     </>
   );
