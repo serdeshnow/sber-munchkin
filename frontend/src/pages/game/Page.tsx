@@ -35,10 +35,10 @@ export const GamePage: React.FC = () => {
   };
 
   return (
-    <div className="p-8 space-y-4 h-full">
+    <div className='flex flex-col h-full gap-5'>
       <Header />
       {/* Список игроков */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="flex flex-col gap-4 px-5 py-10">
         {users.map((u) => (
           <UserCard user={u} />
         ))}

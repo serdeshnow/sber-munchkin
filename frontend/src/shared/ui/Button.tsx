@@ -5,9 +5,9 @@ import { Button as HeroButton, ButtonProps as HeroButtonProps } from '@heroui/re
 type ButtonColor = 'primary' | 'secondary' | 'gray' | 'error' | 'logout';
 
 const colorMap: Record<ButtonColor, { bg: string; text: string }> = {
-  primary: { bg: 'bg-primary', text: 'text-black' },
-  secondary: { bg: 'bg-secondary-500', text: 'text-black' },
-  gray: { bg: 'bg-secondary-600', text: 'text-black' },
+  primary: { bg: 'bg-brown-500', text: 'text-light-gray-500' },
+  secondary: { bg: 'bg-secondary-500', text: 'text-light-gray-500' },
+  gray: { bg: 'bg-secondary-600', text: 'text-light-gray-500' },
   error: { bg: 'bg-error-300', text: 'text-error-600' },
   logout: { bg: 'bg-none', text: 'text-error-500' },
 };
