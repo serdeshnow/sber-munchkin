@@ -4,6 +4,7 @@
 // export * from './NavLinks.tsx';
 // export * from './NavItem.tsx';
 export * from './Icon.tsx';
+export * from './IconButton.tsx';
 export * from './Input.tsx';
 export * from './Button.tsx';
 export * from './Modal.tsx';

@@ -39,7 +39,7 @@ export const Button: React.FC<ButtonProps> = ({
       className={cn(
         selected.bg,
         selected.text,
-        `text-base font-bold w-full py-3`,
+        `text-base font-bold py-3`,
         className,
       )}
     >

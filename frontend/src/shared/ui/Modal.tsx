@@ -13,7 +13,7 @@ export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, title, children }
     isOpen={isOpen}
     onClose={onClose}
     scrollBehavior="inside"
-    className="min-w-lg rounded-3xl px-13 py-9"
+    className="min-w-lg rounded-3xl px-13 py-9 bg-dark-gray-500"
   >
     <ModalContent className="max-h-[80vh]">
       {title && (

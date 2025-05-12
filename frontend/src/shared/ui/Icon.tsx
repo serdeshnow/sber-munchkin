@@ -20,7 +20,7 @@ export type IconType =
   | 'question';
 
 /** Пропсы компонента */
-interface IconProps {
+export interface IconProps {
   type: IconType;
   onClick?: React.MouseEventHandler<HTMLDivElement>;
   className?: string;
