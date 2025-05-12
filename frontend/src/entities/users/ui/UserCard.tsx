@@ -12,12 +12,14 @@ export const UserCard: React.FC<UserCardProps> = ({user: u}) => {
 
   return (
     <>
-      <Card key={u.username} className="flex justify-between p-4 bg-dark-gray-500 rounded-lg">
-        <div className="flex gap-5">
-          <Button>
+      <Card key={u.username} className="flex justify-between p-4 bg-dark-gray-500">
+        <div className="flex gap-5 align-center">
+          <Button
+           className='p-0'
+          >
             <Icon type="trash" onClick={() => onDeleteClick(u.username)}/>
           </Button>
-          <div className="font-bold">{u.username}</div>
+          <p className="font-bold">{u.username}</p>
         </div>
 
         <div className="flex w-full justify-end gap-5">

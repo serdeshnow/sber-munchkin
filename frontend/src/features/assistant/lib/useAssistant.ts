@@ -9,7 +9,8 @@ import type { PlayerSession } from '@entities/users';
 
 export const useAssistant = () => {
   const [users, setUsers] = useState<PlayerSession[]>([
-    { username: 'Игрок', level: 1, power: 1 },
+    { username: 'Влад', level: 2, power: 5 },
+    { username: 'Денис', level: 3, power: 4 },
   ]);
   const assistantRef = useRef<any>(null);
 

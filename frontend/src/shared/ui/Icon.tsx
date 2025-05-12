@@ -5,7 +5,7 @@ import PlusIcon from '@assets/img/plus.svg?react';
 import ArrowLeftIcon from '@assets/img/arrow_left.svg?react';
 import ArrowRightIcon from '@assets/img/arrow_right.svg?react';
 import RestartIcon from '@assets/img/restart.svg?react';
-import TrashIcon from '@assets/img/plus.svg?react';
+import TrashIcon from '@assets/img/trash.svg?react';
 import EditIcon from '@assets/img/edit.svg?react';
 
 /** Типы */

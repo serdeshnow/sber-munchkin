@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { useAssistant } from '@features/assistant';
-import { Button, Icon, Modal } from '@shared/ui';
+import { Button, Modal } from '@shared/ui';
 import { UserCard } from '@entities/users';
-import { Header } from '@widgets/header';
 
 export const GamePage: React.FC = () => {
-  const { users, addUser, deleteUser, renameUser, resetGame, changeLevel, changePower } =
+  const {users, addUser, deleteUser, renameUser, resetGame, changeLevel, changePower} =
     useAssistant();
 
   // Локальный state для модалок
@@ -13,7 +12,7 @@ export const GamePage: React.FC = () => {
     type: 'reset' | 'delete';
     username?: string;
     open: boolean;
-  }>({ type: 'reset', open: false });
+  }>({type: 'reset', open: false});
 
   const [isAddModalOpen, setAddModalOpen] = useState(false);
   const [newName, setNewName] = useState('');
@@ -21,7 +20,7 @@ export const GamePage: React.FC = () => {
 
   // Хендлер открытия удаления
   const onDeleteClick = (username: string) => {
-    setConfirmModal({ type: 'delete', username, open: true });
+    setConfirmModal({type: 'delete', username, open: true});
   };
 
   // Подтверждение в модалке
@@ -31,23 +30,21 @@ export const GamePage: React.FC = () => {
     } else if (isConfirmModal.type === 'reset') {
       resetGame();
     }
-    setConfirmModal({ ...isConfirmModal, open: false });
+    setConfirmModal({...isConfirmModal, open: false});
   };
 
   return (
-    <div className='flex flex-col h-full gap-5'>
-      <Header />
-      {/* Список игроков */}
-      <div className="flex flex-col gap-4 px-5 py-10">
+    <>
+      <div className="flex flex-col gap-4 px-5">
         {users.map((u) => (
-          <UserCard user={u} />
+          <UserCard user={u}/>
         ))}
       </div>
 
       {/* Модалка подтверждения */}
       <Modal
         isOpen={isConfirmModal.open}
-        onClose={() => setConfirmModal({ ...isConfirmModal, open: false })}
+        onClose={() => setConfirmModal({...isConfirmModal, open: false})}
         title={
           isConfirmModal.type === 'reset'
             ? 'Сбросить всю игру?'
@@ -57,7 +54,7 @@ export const GamePage: React.FC = () => {
         <div className="space-x-2 flex justify-end">
           <Button
             variant="solid"
-            onClick={() => setConfirmModal({ ...isConfirmModal, open: false })}
+            onClick={() => setConfirmModal({...isConfirmModal, open: false})}
           >
             Отмена
           </Button>
@@ -111,6 +108,6 @@ export const GamePage: React.FC = () => {
           </div>
         </div>
       </Modal>
-    </div>
+    </>
   );
 };

@@ -25,7 +25,7 @@ export const Card: React.FC<CardProps> = ({
       className={cn(
         selectedVariant.bg,
         selectedVariant.shadow,
-        'rounded-2xl p-8',
+        'rounded-2xl px-5 py-4',
         className,
       )}
       {...props}
