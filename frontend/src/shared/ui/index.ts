@@ -6,7 +6,7 @@
 export * from './Icon.tsx';
 export * from './Input.tsx';
 export * from './Button.tsx';
-export * from './Modal.tsx'
+export * from './Modal.tsx';
 // export * from './Accordion.tsx';
 export * from './Title.tsx';
 export * from './Card.tsx';

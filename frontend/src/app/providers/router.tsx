@@ -1,10 +1,7 @@
 import { createBrowserRouter } from 'react-router';
-import { AppLayout } from '@widgets/layout';
-import { HomePage } from '@pages/home';
-// import { Bot } from '@features/bot';
-// import { AddSchedulePage } from '@pages/add-schedule';
-// import { ScheduleTablePage } from '@pages/schedule-table';
-// import { AboutPage } from '@/pages/about';
+import { AppLayout } from '@app/layouts/AppLayout.tsx';
+import { GamePage } from '@pages/game/Page.tsx';
+import { MenuPage } from '@pages/menu/Page.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -13,28 +10,18 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        Component: HomePage,
+        Component: MenuPage,
       },
-      // {
-      //   path: '/sber',
-      //   Component: Bot,
-      // },
-      // {
-      //   path: '/add-schedule',
-      //   Component: AddSchedulePage,
-      // },
-      // {
-      //   path: '/schedule/:id',
-      //   Component: ScheduleTablePage,
-      // },
+      // Game
+      {
+        path: 'game',
+        children: [
+          {
+            index: true,
+            Component: GamePage,
+          },
+        ],
+      },
     ],
   },
-  // {
-  //   path: '/',
-  //   element: <LandingPage />,
-  // },
-  // {
-  //   path: '/about',
-  //   element: <AboutPage />,
-  // },
 ]);

@@ -18,7 +18,7 @@
     "format": "prettier --write ./src"
   },
   "dependencies": {
-    "@heroui/react": "2.8.0-beta.2",
+    "@heroui/react": "2.8.0-beta.4",
     "@salutejs/client": "1.35.5",
     "@tailwindcss/vite": "^4.1.4",
     "classnames": "2.5.1",

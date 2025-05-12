@@ -1,11 +1,11 @@
-import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@styles/index.css';
+import { HeroUIProvider } from '@heroui/react';
 import { RouterProvider } from 'react-router';
-import { router } from './providers/router.tsx';
+import { router } from '@app/providers/router.tsx';
+import '@styles/index.css';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
+  <HeroUIProvider>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </HeroUIProvider>,
 );

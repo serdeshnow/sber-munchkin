@@ -1,4 +1,4 @@
-import fsd from '@conarti/eslint-plugin-feature-sliced';
+// import fsd from '@conarti/eslint-plugin-feature-sliced';
 import js from '@eslint/js';
 import eslintConfigPrettier from 'eslint-config-prettier';
 /* Plugins import */
@@ -69,17 +69,17 @@ export default [
   /* Feature-Sliced Design config */
   {
     plugins: {
-      '@conarti/feature-sliced': fsd,
+      // '@conarti/feature-sliced': fsd,
     },
     settings: {
-      '@conarti/feature-sliced': {
-        allowTypeImports: true,
-      },
+      // '@conarti/feature-sliced': {
+      //   allowTypeImports: true,
+      // },
     },
     rules: {
-      '@conarti/feature-sliced/layers-slices': 'error',
+      // '@conarti/feature-sliced/layers-slices': 'error',
       // '@conarti/feature-sliced/absolute-relative': 'error',
-      '@conarti/feature-sliced/public-api': 'error',
+      // '@conarti/feature-sliced/public-api': 'error',
     },
   },
 
