@@ -4,10 +4,10 @@
 @source '../../../node_modules/@heroui/theme/dist/**/*.{js,ts,jsx,tsx}';
 @custom-variant dark (&:is(.dark *));
 
-/*@font-face {*/
-/*  font-family: 'Raleway';*/
-/*  src: url('../assets/font/Raleway.ttf');*/
-/*}*/
+@font-face {
+  font-family: 'Inter';
+  src: url('../assets/fonts/Inter-Variable.ttf');
+}
 
 @theme {
   --color-light-gray-500: #d9d9d9;
@@ -29,7 +29,7 @@
 
 /* <html> tag */
 :root {
-  font-family: Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
