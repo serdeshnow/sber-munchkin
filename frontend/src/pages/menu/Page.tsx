@@ -1,6 +1,6 @@
 import React from 'react';
-import { Button, Icon } from '@shared/ui';
 import { useNavigate } from 'react-router';
+import { Button, Icon } from '@shared/ui';
 
 export const MenuPage: React.FC = () => {
   const navigate = useNavigate();
@@ -10,11 +10,12 @@ export const MenuPage: React.FC = () => {
       <Button
         onClick={() => navigate('/game')}
         className="w-3xs justify-start text-2xl h-auto text-center"
-        startContentIcon={<Icon type="plus"/>}
+        startContent={<Icon type="plus"/>}
       >Новая Игра</Button>
       <Button
+        onClick={() => navigate('/support')}
         className="w-3xs justify-start text-2xl h-auto text-center"
-        startContentIcon={<Icon type="question"/>}
+        startContent={<Icon type="question"/>}
       >Справка</Button>
     </section>
   );

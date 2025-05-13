@@ -22,6 +22,16 @@ export const router = createBrowserRouter([
           },
         ],
       },
+      // support
+      {
+        path: 'support',
+        children: [
+          {
+            index: true,
+            Component: GamePage,
+          },
+        ],
+      },
     ],
   },
 ]);
