@@ -10,13 +10,17 @@ export const MenuPage: React.FC = () => {
       <Button
         onClick={() => navigate('/game')}
         className="w-3xs justify-start text-2xl h-auto text-center"
-        startContent={<Icon type="plus"/>}
-      >Новая Игра</Button>
+        startContent={<Icon type="plus" />}
+      >
+        Начать игру
+      </Button>
       <Button
         onClick={() => navigate('/support')}
         className="w-3xs justify-start text-2xl h-auto text-center"
-        startContent={<Icon type="question"/>}
-      >Справка</Button>
+        startContent={<Icon type="question" />}
+      >
+        Справка
+      </Button>
     </section>
   );
 };
