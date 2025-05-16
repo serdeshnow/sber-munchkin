@@ -10,6 +10,7 @@ interface TitleProps extends PropsWithChildren {
   size?: TitleSize;
   // backButton?: boolean;
   // onBack?: () => void;
+  onClick?: () => void;
   buildingAddress?: string;
   orderNumber?: string;
   className?: string;
@@ -19,6 +20,7 @@ export const Title: React.FC<TitleProps> = ({
   size = 'main',
   // backButton = false,
   // onBack,
+  onClick,
   buildingAddress,
   orderNumber,
   className,
@@ -32,7 +34,7 @@ export const Title: React.FC<TitleProps> = ({
   });
 
   return (
-    <div className={cn('flex flex-col gap-1', className)}>
+    <div className={cn('flex flex-col gap-1', className, onClick && 'cursor-pointer')} onClick={onClick}>
       <div className="flex items-center gap-2">
         {/*{backButton && (*/}
         {/*  <Button*/}
