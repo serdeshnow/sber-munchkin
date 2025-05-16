@@ -14,6 +14,16 @@ export const useAssistant = () => {
   ]);
   const assistantRef = useRef<any>(null);
 
+  useEffect(() => {
+    setUsers(prevUsers => {
+      const corrected = prevUsers.map(u =>
+        u.power < u.level ? { ...u, power: u.level } : u
+      );
+      const dirty = corrected.some((u, i) => u.power !== prevUsers[i].power);
+      return dirty ? corrected : prevUsers;
+    });
+  }, [users]);
+
   // Состояние для ассистента
   const getState = useCallback<() => AppState>(
     () => ({
