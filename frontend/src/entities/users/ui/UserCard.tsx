@@ -48,7 +48,6 @@ export const UserCard: React.FC<Props> = (
         {editing ? (
           <Input
             ref={inputRef}
-            className=""
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             onBlur={onSaveRename}
@@ -72,7 +71,7 @@ export const UserCard: React.FC<Props> = (
           <Button size="sm" onClick={() => onLevelChange(user.username, -1)}>
             <Icon type="arrowLeft"/>
           </Button>
-          <span className="px-2">{user.level} ур.</span>
+          <span className="px-2 font-semibold">{user.level} ур.</span>
           <Button size="sm" onClick={() => onLevelChange(user.username, +1)}>
             <Icon type="arrowRight"/>
           </Button>
@@ -82,7 +81,7 @@ export const UserCard: React.FC<Props> = (
           <Button size="sm" onClick={() => onPowerChange(user.username, -1)}>
             <Icon type="arrowLeft"/>
           </Button>
-          <span className="px-2">{user.power} мощь</span>
+          <span className="px-2 font-semibold">{user.power} мощь</span>
           <Button size="sm" onClick={() => onPowerChange(user.username, +1)}>
             <Icon type="arrowRight"/>
           </Button>
