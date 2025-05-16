@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAssistant } from '@features/assistant';
+import { names } from '@features/game';
 
 export const useGameModel = () => {
   const { users, addUser, deleteUser, renameUser, resetGame, changeLevel, changePower } =
@@ -37,7 +38,7 @@ export const useGameModel = () => {
   // ---- Добавление нового игрока без модалки ----
   const openAdd = () => {
     // генерируем имя по умолчанию
-    const defaultName = `Игрок ${users.length + 1}_${Math.random().toString(36).substr(2, 5)}`;
+    const defaultName = `${names[users.length]}`;
     addUser(defaultName);
     // тут же входим в inline-редактирование
     setEditing(defaultName);
