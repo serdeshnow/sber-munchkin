@@ -39,6 +39,17 @@ export const Header: React.FC = () => {
           </div>
         )
       }
+      {
+        location.pathname === '/support' && (
+          <div className="flex gap-3 w-full justify-end">
+            <Button
+              className="px-6 text-2xl w-auto"
+              onClick={() => navigate(-1)}>
+              <Icon type="arrowLeft"/> Назад
+            </Button>
+          </div>
+        )
+      }
     </header>
   );
 };
