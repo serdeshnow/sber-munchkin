@@ -37,7 +37,7 @@ export const useGameModel = () => {
   // ---- Добавление нового игрока без модалки ----
   const openAdd = () => {
     // генерируем имя по умолчанию
-    const defaultName = `Игрок ${users.length + 1}`;
+    const defaultName = `Игрок ${users.length + 1}_${Math.random().toString(36).substr(2, 5)}`;
     addUser(defaultName);
     // тут же входим в inline-редактирование
     setEditing(defaultName);

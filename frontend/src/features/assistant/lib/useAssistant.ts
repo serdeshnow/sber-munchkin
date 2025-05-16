@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useState, useRef, useCallback, useEffect, useMemo } from 'react';
 import {
   type ActionType,
   type AppState,
@@ -7,91 +7,76 @@ import {
 } from '@entities/assistant';
 import type { PlayerSession } from '@entities/users';
 
-export const initialUsersState: PlayerSession[] = [
-  { username: 'Влад', level: 2, power: 5 },
-  { username: 'Денис', level: 3, power: 4 },
-]
+export const initialUsersState: PlayerSession[] = [];
 
 export const useAssistant = () => {
+  // всегда храним username в lowercase
   const [users, setUsers] = useState<PlayerSession[]>(initialUsersState);
   const assistantRef = useRef<any>(null);
 
+  // правило «power ≥ level»
   useEffect(() => {
     setUsers(prevUsers => {
       const corrected = prevUsers.map(u =>
         u.power < u.level ? { ...u, power: u.level } : u
       );
-      const dirty = corrected.some((u, i) => u.power !== prevUsers[i].power);
-      return dirty ? corrected : prevUsers;
+      return corrected.some((u, i) => u.power !== prevUsers[i].power)
+        ? corrected
+        : prevUsers;
     });
   }, [users]);
 
-  // Состояние для ассистента
-  const getState = useCallback<() => AppState>(
-    () => ({
-      item_selector: {
-        items: users.map(({ username, level, power }) => ({ username, level, power })),
-        ignored_words: [
-          'добавить',
-          'установить',
-          'запиши',
-          'поставь',
-          'закинь',
-          'напомнить',
-          'удалить',
-          'удали',
-          'выполни',
-          'выполнил',
-          'сделал',
-        ],
-      },
-    }),
-    [users],
-  );
-
-  // CRUD-методы
+  // --- CRUD с нормализацией имён при добавлении и переименовании ---
   const resetGame = useCallback(() => {
-    setUsers((prev) => prev.map((u) => ({ ...u, level: 1, power: 1 })));
+    setUsers(prev => prev.map(u => ({ ...u, level: 1, power: 1 })));
   }, []);
 
   const addUser = useCallback((username: string) => {
-    setUsers((prev) => {
-      if (prev.length >= 7) {
-        throw new Error('MaxPlayers');
-      }
-      return [...prev, { username, level: 1, power: 1 }];
+    const name = username.toLowerCase();
+    setUsers(prev => {
+      if (prev.length >= 7) throw new Error('MaxPlayers');
+      return [...prev, { username: name, level: 1, power: 1 }];
     });
   }, []);
 
   const deleteUser = useCallback((username: string) => {
-    setUsers((prev) => prev.filter((u) => u.username !== username));
+    const name = username.toLowerCase();
+    setUsers(prev => prev.filter(u => u.username !== name));
   }, []);
 
   const renameUser = useCallback((username: string, newUsername: string) => {
-    setUsers((prev) =>
-      prev.map((u) => (u.username === username ? { ...u, username: newUsername } : u)),
+    const from = username.toLowerCase();
+    const to = newUsername.toLowerCase();
+    setUsers(prev =>
+      prev.map(u => (u.username === from ? { ...u, username: to } : u))
     );
   }, []);
 
   const changeLevel = useCallback((username: string, delta: number) => {
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.username === username ? { ...u, level: Math.max(1, u.level + delta) } : u,
-      ),
+    const name = username.toLowerCase();
+    setUsers(prev =>
+      prev.map(u =>
+        u.username === name ? { ...u, level: Math.max(1, u.level + delta) } : u
+      )
     );
   }, []);
 
   const changePower = useCallback((username: string, delta: number) => {
-    setUsers((prev) =>
-      prev.map((u) =>
-        u.username === username ? { ...u, power: Math.max(0, u.power + delta) } : u,
-      ),
+    const name = username.toLowerCase();
+    setUsers(prev =>
+      prev.map(u =>
+        u.username === name ? { ...u, power: Math.max(0, u.power + delta) } : u
+      )
     );
   }, []);
 
-  // Диспетчер событий ассистента
+  // приводим incoming-action.username к lowercase
   const dispatchAssistantAction = useCallback(
     (action: AssistantAction) => {
+      // нормализуем имена из команды
+      if (action.username) action.username = action.username.toLowerCase();
+      if (action.newUsername) action.newUsername = action.newUsername.toLowerCase();
+
       try {
         switch (action.type as ActionType) {
           case 'reset_game':
@@ -105,8 +90,8 @@ export const useAssistant = () => {
             break;
           case 'rename_user':
             action.username &&
-              action.newUsername &&
-              renameUser(action.username, action.newUsername);
+            action.newUsername &&
+            renameUser(action.username, action.newUsername);
             break;
           case 'increase_user_level':
             action.username && changeLevel(action.username, +1);
@@ -116,50 +101,74 @@ export const useAssistant = () => {
             break;
           case 'increase_user_power':
             action.username &&
-              action.power &&
-              changePower(action.username, +Number(action.power));
+            action.power &&
+            changePower(action.username, +Number(action.power));
             break;
           case 'decrease_user_power':
             action.username &&
-              action.power &&
-              changePower(action.username, -Number(action.power));
+            action.power &&
+            changePower(action.username, -Number(action.power));
             break;
           default:
             console.warn('Unknown action:', action.type);
         }
       } catch (e: any) {
         if (e.message === 'MaxPlayers') {
-          // сюда можно вставить callback или внешнее оповещение
           console.warn('Нельзя добавить больше 7 игроков');
         } else {
           throw e;
         }
       }
     },
-    [resetGame, addUser, deleteUser, renameUser, changeLevel, changePower],
+    [resetGame, addUser, deleteUser, renameUser, changeLevel, changePower]
   );
 
-  // Инициализация ассистента
+  // состояние для ассистента
+  const getState = useCallback<() => AppState>(
+    () => ({
+      item_selector: {
+        items: users.map(({ username, level, power }) => ({
+          username, // всё ещё lowercase
+          level,
+          power,
+        })),
+        ignored_words: [
+          'добавить','установить','запиши','поставь','закинь',
+          'напомнить','удалить','удали','выполни','выполнил','сделал',
+        ],
+      },
+    }),
+    [users]
+  );
+
+  // инициализация ассистента
   useEffect(() => {
     const assistant = initializeAssistant(getState);
     assistantRef.current = assistant;
-
     assistant.on('data', ({ action }: any) => {
       action && dispatchAssistantAction(action);
     });
     assistant.on('start', () =>
-      console.log('assistant.start', assistant.getInitialData()),
+      console.log('assistant.start', assistant.getInitialData())
     );
     assistant.on('error', console.error);
-
     return () => {
       assistantRef.current = null;
     };
   }, [getState, dispatchAssistantAction]);
 
+  // для UI: копируем users, но делаем username с заглавной буквы
+  const displayedUsers = useMemo(
+    () =>
+      users.map(u => ({
+        ...u,
+        username: u.username.charAt(0).toUpperCase() + u.username.slice(1),
+      })),
+    [users]
+  );
+
   return {
-    users,
-    // UI-методы
+    users: displayedUsers,
     resetGame,
     addUser,
     deleteUser,
