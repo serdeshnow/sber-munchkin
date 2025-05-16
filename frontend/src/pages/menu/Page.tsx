@@ -1,22 +1,29 @@
 import React from 'react';
 import { useNavigate } from 'react-router';
 import { Button, Icon } from '@shared/ui';
+import { useGame } from '@app/providers/GameProvider.tsx';
+import { initialUsersState } from '@features/assistant';
 
 export const MenuPage: React.FC = () => {
   const navigate = useNavigate();
+  const game = useGame();
 
   return (
     <section className="flex flex-col h-full items-center justify-center gap-10">
       <Button
         onClick={() => navigate('/game')}
-        className="w-3xs justify-start text-2xl h-auto text-center"
-        startContent={<Icon type="plus" />}
+        className="min-w-3xs w-auto justify-start text-2xl h-auto text-center"
+        startContent={<Icon type={
+          game.users === initialUsersState ? ('plus') : ('resume')
+        } />}
       >
-        Начать игру
+        {
+          game.users === initialUsersState ? ('Начать игру') : ('Продолжить игру')
+        }
       </Button>
       <Button
         onClick={() => navigate('/support')}
-        className="w-3xs justify-start text-2xl h-auto text-center"
+        className="min-w-3xs w-auto justify-start text-2xl h-auto text-center"
         startContent={<Icon type="question" />}
       >
         Справка

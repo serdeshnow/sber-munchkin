@@ -8,6 +8,7 @@ import RestartIcon from '@assets/img/restart.svg?react';
 import TrashIcon from '@assets/img/trash.svg?react';
 import EditIcon from '@assets/img/edit.svg?react';
 import QuestionIcon from '@assets/img/question.svg?react';
+import ResumeIcon from '@assets/img/resume.svg?react';
 
 /** Типы */
 export type IconType =
@@ -17,7 +18,8 @@ export type IconType =
   | 'restart'
   | 'arrowLeft'
   | 'arrowRight'
-  | 'question';
+  | 'question'
+  | 'resume';
 
 /** Пропсы компонента */
 export interface IconProps {
@@ -43,6 +45,7 @@ const iconMap: Record<IconType, React.FC<React.SVGProps<SVGSVGElement>>> = {
   arrowLeft: ArrowLeftIcon,
   arrowRight: ArrowRightIcon,
   question: QuestionIcon,
+  resume: ResumeIcon,
 };
 
 export const Icon: React.FC<IconProps> = (
