@@ -10,9 +10,12 @@
 <br>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/typescript-323330?style=for-the-badge&logo=typescript&logoColor=blue"/>
-    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-    <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white"/>
+    <img alt="typescript" src="https://img.shields.io/badge/typescript-323330?
+style=for-the-badge&logo=typescript&logoColor=blue"/>
+    <img alt="react" src="https://img.shields.io/badge/React-20232A?
+style=for-the-badge&logo=react&logoColor=61DAFB"/>
+    <img alt="pnpm" src="https://img.shields.io/badge/pnpm-F69220?
+style=for-the-badge&logo=pnpm&logoColor=white"/>
 </div>
 
 # Быстрый старт

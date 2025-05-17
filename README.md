@@ -1,6 +1,6 @@
 <br />
 <div align="center">
-    <img src="./public/favicon.svg" alt="Logo" width="80" >
+    <img src="./frontend/public/favicon.svg" alt="Logo" width="80" >
 <h3 align="center">Счетчик для игры Манчкин</h3>
   <p align="center">
     Следите за уровнем и силой героев в игре Манчкин прямо на экране!
@@ -10,9 +10,12 @@
 <br>
 
 <div align="center">
-    <img src="https://img.shields.io/badge/typescript-323330?style=for-the-badge&logo=typescript&logoColor=blue"/>
-    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-    <img src="https://img.shields.io/badge/pnpm-F69220?style=for-the-badge&logo=pnpm&logoColor=white"/>
+    <img alt="typescript" src="https://img.shields.io/badge/typescript-323330?
+style=for-the-badge&logo=typescript&logoColor=blue"/>
+    <img alt="react" src="https://img.shields.io/badge/React-20232A?
+style=for-the-badge&logo=react&logoColor=61DAFB"/>
+    <img alt="pnpm" src="https://img.shields.io/badge/pnpm-F69220?
+style=for-the-badge&logo=pnpm&logoColor=white"/>
 </div>
 
 # Быстрый старт
