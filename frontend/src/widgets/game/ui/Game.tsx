@@ -2,6 +2,7 @@ import React from 'react';
 import { ConfirmModal } from '@features/game';
 import { UserCard } from '@entities/users';
 import { useGame } from '@app/providers/GameProvider.tsx';
+import { Title } from '@shared/ui';
 
 export const Game: React.FC = () => {
   const {
@@ -24,8 +25,17 @@ export const Game: React.FC = () => {
 
   return (
     <>
+      {
+        users.length === 0 &&
+        <div className="flex items-center justify-center h-full px-5">
+          <Title>
+            Добавьте своего первого манчкина!
+          </Title>
+        </div>
+      }
+
       <div className="flex flex-col gap-4 px-5">
-        {users.map((u) => (
+        {users && users.map((u) => (
           <UserCard
             key={u.username}
             user={u}
@@ -39,7 +49,8 @@ export const Game: React.FC = () => {
             onLevelChange={changeLevel}
             onPowerChange={changePower}
           />
-        ))}
+        ))
+        }
       </div>
 
       <ConfirmModal

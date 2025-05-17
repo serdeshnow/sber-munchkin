@@ -1,7 +1,7 @@
 import React from 'react';
 import { Modal, Button } from '@shared/ui';
 
-interface Props {
+interface ConfirmModalProps {
   isOpen: boolean;
   type: 'reset' | 'delete';
   username?: string;
@@ -9,7 +9,7 @@ interface Props {
   onConfirm: () => void;
 }
 
-export const ConfirmModal: React.FC<Props> = (
+export const ConfirmModal: React.FC<ConfirmModalProps> = (
   {
     isOpen,
     type,

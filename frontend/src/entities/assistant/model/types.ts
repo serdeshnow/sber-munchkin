@@ -1,5 +1,5 @@
-import { PlayerSession } from '@entities/users/types';
 import { AssistantAppState } from '@salutejs/client';
+import type { PlayerSession } from '@entities/users';
 
 export interface ItemSelectorState {
   items: PlayerSession[];

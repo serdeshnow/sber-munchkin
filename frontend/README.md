@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+# Sber-munchkin
 
 Импортируйте SVG правильно:
 // Для React-компонента
