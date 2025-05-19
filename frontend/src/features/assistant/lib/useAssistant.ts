@@ -14,18 +14,6 @@ export const useAssistant = () => {
   const [users, setUsers] = useState<PlayerSession[]>(initialUsersState);
   const assistantRef = useRef<any>(null);
 
-  // правило «power ≥ level»
-  useEffect(() => {
-    setUsers(prevUsers => {
-      const corrected = prevUsers.map(u =>
-        u.power < u.level ? { ...u, power: u.level } : u
-      );
-      return corrected.some((u, i) => u.power !== prevUsers[i].power)
-        ? corrected
-        : prevUsers;
-    });
-  }, [users]);
-
   // --- CRUD с нормализацией имён при добавлении и переименовании ---
   const resetGame = useCallback(() => {
     setUsers(prev => prev.map(u => ({ ...u, level: 1, power: 1 })));
@@ -55,18 +43,27 @@ export const useAssistant = () => {
   const changeLevel = useCallback((username: string, delta: number) => {
     const name = username.toLowerCase();
     setUsers(prev =>
-      prev.map(u =>
-        u.username === name ? { ...u, level: Math.max(1, u.level + delta) } : u
-      )
+      prev.map(u => {
+        if (u.username !== name) return u;
+        const newLevel = Math.max(1, u.level + delta);
+        return {
+          ...u,
+          level: newLevel,
+          power: Math.max(u.power, newLevel),
+        };
+      })
     );
   }, []);
 
   const changePower = useCallback((username: string, delta: number) => {
+    if (Number.isNaN(delta)) return;
     const name = username.toLowerCase();
     setUsers(prev =>
-      prev.map(u =>
-        u.username === name ? { ...u, power: Math.max(0, u.power + delta) } : u
-      )
+      prev.map(u => {
+        if (u.username !== name) return u;
+        const newPower = Math.max(0, u.power + delta);
+        return { ...u, power: Math.max(newPower, u.level) };
+      })
     );
   }, []);
 
@@ -95,19 +92,31 @@ export const useAssistant = () => {
             break;
           case 'increase_user_level':
             action.username && changeLevel(action.username, +1);
+            console.log('decrease_user_level', action.username, action);
             break;
           case 'decrease_user_level':
             action.username && changeLevel(action.username, -1);
+            console.log('decrease_user_level', action.username);
             break;
           case 'increase_user_power':
-            action.username &&
-            action.power &&
-            changePower(action.username, +Number(action.power));
+            if (action.username && action.power != null) {
+              const delta = Number(action.power);
+              if (!Number.isNaN(delta)) {
+                changePower(action.username, delta);
+              } else {
+                console.warn('Не удалось распознать power:', action.power);
+              }
+            }
             break;
           case 'decrease_user_power':
-            action.username &&
-            action.power &&
-            changePower(action.username, -Number(action.power));
+            if (action.username && action.power != null) {
+              const delta = Number(action.power);
+              if (!Number.isNaN(delta)) {
+                changePower(action.username, -delta);
+              } else {
+                console.warn('Не удалось распознать power:', action.power);
+              }
+            }
             break;
           default:
             console.warn('Unknown action:', action.type);
