@@ -38,8 +38,8 @@ export const UserCard: React.FC<Props> = (
   }, [editing]);
 
   return (
-    <Card className="flex justify-between p-4 bg-dark-gray-500">
-      <div className="flex gap-5 items-center">
+    <Card className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-4 bg-dark-gray-500">
+      <div className="flex items-center gap-3 w-full sm:w-auto">
         <IconButton
           icon='trash'
           onClick={() => onDelete(user.username)}
@@ -66,23 +66,23 @@ export const UserCard: React.FC<Props> = (
         )}
       </div>
 
-      <div className="flex gap-5">
-        <div className="flex bg-brown-500 rounded-xl items-center">
-          <Button size="sm" onClick={() => onLevelChange(user.username, -1)}>
+      <div className="flex w-full flex-col justify-center items-center gap-5  sm:justify-end sm:flex-row">
+        <div className="flex items-center rounded-xl bg-brown-500 w-full justify-between sm:w-auto sm:justify-center">
+          <Button size="sm" className='px-2 py-1' onClick={() => onLevelChange(user.username, -1)}>
             <Icon type="arrowLeft"/>
           </Button>
-          <span className="px-2 font-semibold">{user.level} ур.</span>
-          <Button size="sm" onClick={() => onLevelChange(user.username, +1)}>
+          <span className="px-2 font-semibold  whitespace-nowrap text-sm sm:text-base ">{user.level} ур.</span>
+          <Button size="sm" className='px-2 py-1' onClick={() => onLevelChange(user.username, +1)}>
             <Icon type="arrowRight"/>
           </Button>
         </div>
 
-        <div className="flex bg-brown-500 rounded-xl items-center">
-          <Button size="sm" onClick={() => onPowerChange(user.username, -1)}>
+        <div className="flex items-center rounded-xl bg-brown-500 w-full justify-between sm:w-auto sm:justify-center">
+          <Button size="sm" className='px-2 py-1' onClick={() => onPowerChange(user.username, -1)}>
             <Icon type="arrowLeft"/>
           </Button>
-          <span className="px-2 font-semibold">{user.power} мощь</span>
-          <Button size="sm" onClick={() => onPowerChange(user.username, +1)}>
+          <span className="px-2 font-semibold  whitespace-nowrap text-sm sm:text-base">{user.power} мощь</span>
+          <Button size="sm" className='px-2 py-1' onClick={() => onPowerChange(user.username, +1)}>
             <Icon type="arrowRight"/>
           </Button>
         </div>

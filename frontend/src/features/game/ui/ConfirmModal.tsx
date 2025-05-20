@@ -26,9 +26,9 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = (
         : `Удалить игрока «${username}»?`
     }
   >
-    <div className="flex justify-end space-x-2">
-      <Button variant="solid" className='w-full' onClick={onClose}>Отмена</Button>
-      <Button variant='solid' className='w-full' onClick={onConfirm}>Да, подтвердить</Button>
+    <div className="flex flex-col sm:flex-row justify-end gap-2">
+      <Button variant="solid" className='flex-1' onClick={onClose}>Отмена</Button>
+      <Button variant='solid' className='flex-1' onClick={onConfirm}>Да, подтвердить</Button>
     </div>
   </Modal>
 );

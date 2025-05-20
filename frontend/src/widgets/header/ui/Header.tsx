@@ -9,7 +9,8 @@ export const Header: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="flex justify-between bg-dark-gray-500 px-10 py-4 gap-50">
+    <header
+      className="flex flex-wrap items-center justify-between bg-dark-gray-500 px-4 py-3 gap-4 sm:px-6 sm:py-4 md:px-10 md:gap-6 lg:gap-5">
       <Title
         onClick={() => navigate('/')}
       >Манчкины</Title>
@@ -17,24 +18,26 @@ export const Header: React.FC = () => {
         location.pathname === '/game' && (
           <div className="flex gap-3 w-full justify-end">
             <Button
-              className="px-6 text-2xl w-auto"
+              className="w-full sm:w-auto px-4 sm:px-5 md:px-6 text-sm sm:text-base md:text-xl"
               disabled={users.length >= 6}
               onClick={openAdd}>
-              <Icon type="plus"/> Добавить манчкина
+              <Icon type="plus"/>
+              <span className="hidden md:inline">Добавить манчкина</span>
             </Button>
             <Button
-              className="px-6 text-2xl w-auto"
+              className="w-full sm:w-auto px-4 sm:px-5 md:px-6 text-sm sm:text-base md:text-xl"
               onClick={openReset}
             >
               <Icon type="restart"/>
-              Рестарт
+              <span className="hidden md:inline">Рестарт</span>
+
             </Button>
             <Button
               onClick={() => navigate('/support')}
-              className="px-6 text-2xl w-auto"
-              startContent={<Icon type="question" />}
+              className="w-full sm:w-auto px-4 sm:px-5 md:px-6 text-sm sm:text-base md:text-xl"
+              startContent={<Icon type="question"/>}
             >
-              Справка
+              <span className="hidden md:inline">Справка</span>
             </Button>
           </div>
         )
@@ -43,9 +46,9 @@ export const Header: React.FC = () => {
         location.pathname === '/support' && (
           <div className="flex gap-3 w-full justify-end">
             <Button
-              className="px-6 text-2xl w-auto"
+              className="w-full sm:w-auto px-4 sm:px-5 md:px-6 text-sm sm:text-base md:text-xl"
               onClick={() => navigate(-1)}>
-              <Icon type="arrowLeft"/> Назад
+              <Icon type="arrowLeft"/> <span>Назад</span>
             </Button>
           </div>
         )

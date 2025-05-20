@@ -44,7 +44,7 @@ export const Button: React.FC<ButtonProps> = (
       className={cn(
         bg,
         text,
-        'text-base font-bold py-3',
+        'text-sm sm:text-base md:text-lg font-bold py-2 sm:py-3',
         disabled && 'cursor-not-allowed opacity-70',
         className,
       )}
