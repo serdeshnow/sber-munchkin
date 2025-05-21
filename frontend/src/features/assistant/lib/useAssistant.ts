@@ -46,10 +46,16 @@ export const useAssistant = () => {
       prev.map(u => {
         if (u.username !== name) return u;
         const newLevel = Math.max(1, u.level + delta);
+
+        let newPower = u.power;
+        if (delta > 0 && u.power < newLevel) {
+          newPower = Math.max(0, u.power + delta);
+        }
+
         return {
           ...u,
           level: newLevel,
-          power: Math.max(u.power, newLevel),
+          power: newPower,
         };
       })
     );
@@ -62,7 +68,7 @@ export const useAssistant = () => {
       prev.map(u => {
         if (u.username !== name) return u;
         const newPower = Math.max(0, u.power + delta);
-        return { ...u, power: Math.max(newPower, u.level) };
+        return { ...u, power: newPower };
       })
     );
   }, []);
