@@ -25,29 +25,31 @@ export const Game: React.FC = () => {
 
   return (
     <>
-      {users.length === 0 && (
-        <div className="flex items-center justify-center h-full px-5">
-          <Title>Добавьте своего первого манчкина!</Title>
-        </div>
-      )}
+      <div className='flex flex-col h-full w-full'>
+        {users.length === 0 && (
+          <div className="flex items-center justify-center h-full px-5">
+            <Title>Добавьте своего первого манчкина!</Title>
+          </div>
+        )}
 
-      <div className="flex flex-col gap-4 px-5">
-        {users &&
-          users.map((u) => (
-            <UserCard
-              key={u.username}
-              user={u}
-              onDelete={openDelete}
-              onRename={openRename}
-              editing={editing === u.username}
-              newName={newName}
-              setNewName={setNewName}
-              onSaveRename={saveRename}
-              onCancelRename={cancelRename}
-              onLevelChange={changeLevel}
-              onPowerChange={changePower}
-            />
-          ))}
+        <div className="flex flex-col gap-4 px-5">
+          {users &&
+            users.map((u) => (
+              <UserCard
+                key={u.username}
+                user={u}
+                onDelete={openDelete}
+                onRename={openRename}
+                editing={editing === u.username}
+                newName={newName}
+                setNewName={setNewName}
+                onSaveRename={saveRename}
+                onCancelRename={cancelRename}
+                onLevelChange={changeLevel}
+                onPowerChange={changePower}
+              />
+            ))}
+        </div>
       </div>
 
       <ConfirmModal

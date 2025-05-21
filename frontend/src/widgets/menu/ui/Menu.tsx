@@ -9,7 +9,7 @@ export const Menu: React.FC = () => {
   const game = useGame();
 
   return (
-    <section className="flex flex-col h-full items-center justify-center gap-10">
+    <section className="flex flex-col h-[50vh] w-full items-center justify-end gap-10">
       <Button
         onClick={() => navigate('/game')}
         className="min-w-3xs w-auto justify-start text-2xl h-auto text-center"
@@ -17,7 +17,7 @@ export const Menu: React.FC = () => {
           <Icon type={game.users === initialUsersState ? 'plus' : 'resume'} />
         }
       >
-        {game.users === initialUsersState ? 'Начать игру' : 'Играть'}
+        Играть
       </Button>
       <Button
         onClick={() => navigate('/support')}
