@@ -65,15 +65,18 @@ export const useAssistant = (navigate: ReturnType<typeof useNavigate>) => {
         if (u.username !== name) return u;
         const newLevel = Math.max(1, u.level + delta);
 
-        let newPower = u.power;
-        if (delta > 0 && u.power < newLevel) {
-          newPower = Math.max(0, u.power + delta);
+        if (u.level === 1 && delta < 0) {
+          return {
+            ...u,
+            level: newLevel,
+            power: u.power,
+          };
         }
 
         return {
           ...u,
           level: newLevel,
-          power: newPower,
+          power: u.power + delta,
         };
       }),
     );
@@ -85,7 +88,7 @@ export const useAssistant = (navigate: ReturnType<typeof useNavigate>) => {
     setUsers((prev) =>
       prev.map((u) => {
         if (u.username !== name) return u;
-        const newPower = Math.max(0, u.power + delta);
+        const newPower = u.power + delta;
         return {...u, power: newPower};
       }),
     );
