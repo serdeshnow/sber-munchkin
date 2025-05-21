@@ -6,24 +6,30 @@ import {
   initializeAssistant,
 } from '@entities/assistant';
 import type { PlayerSession } from '@entities/users';
+import { useNavigate } from 'react-router';
 
 export const initialUsersState: PlayerSession[] = [];
 
-export const useAssistant = () => {
+export const useAssistant = (navigate: ReturnType<typeof useNavigate>) => {
   // всегда храним username в lowercase
   const [users, setUsers] = useState<PlayerSession[]>(initialUsersState);
   const assistantRef = useRef<any>(null);
 
   // --- CRUD с нормализацией имён при добавлении и переименовании ---
   const resetGame = useCallback(() => {
-    setUsers((prev) => prev.map((u) => ({ ...u, level: 1, power: 1 })));
+    setUsers((prev) => prev.map((u) => ({...u, level: 1, power: 1})));
   }, []);
+
+  const goToGame = useCallback(() => {navigate('/game')}, []);
+
+  const goToSupport = useCallback(() => {navigate('/support')}, []);
+
 
   const addUser = useCallback((username: string) => {
     const name = username.toLowerCase();
     setUsers((prev) => {
       if (prev.length >= 7) throw new Error('MaxPlayers');
-      return [...prev, { username: name, level: 1, power: 1 }];
+      return [...prev, {username: name, level: 1, power: 1}];
     });
   }, []);
 
@@ -35,9 +41,21 @@ export const useAssistant = () => {
   const renameUser = useCallback((username: string, newUsername: string) => {
     const from = username.toLowerCase();
     const to = newUsername.toLowerCase();
-    setUsers((prev) =>
-      prev.map((u) => (u.username === from ? { ...u, username: to } : u)),
-    );
+    setUsers((prev) => {
+      const exists = prev.some((u) => u.username === from);
+      if (!exists) {
+        console.warn(`Пользователь "${from}" не найден`);
+        return prev;
+      }
+
+      const duplicate = prev.some((u) => u.username === to);
+      if (duplicate) {
+        console.warn(`Имя "${to}" уже занято`);
+        return prev;
+      }
+
+      return prev.map((u) => (u.username === from ? {...u, username: to} : u));
+    });
   }, []);
 
   const changeLevel = useCallback((username: string, delta: number) => {
@@ -68,7 +86,7 @@ export const useAssistant = () => {
       prev.map((u) => {
         if (u.username !== name) return u;
         const newPower = Math.max(0, u.power + delta);
-        return { ...u, power: newPower };
+        return {...u, power: newPower};
       }),
     );
   }, []);
@@ -82,9 +100,17 @@ export const useAssistant = () => {
 
       try {
         switch (action.type as ActionType) {
+          // Application
           case 'reset_game':
             resetGame();
             break;
+          case 'go_to_game':
+            goToGame();
+            break;
+          case 'go_to_support':
+            goToSupport();
+            break;
+          // User
           case 'add_user':
             action.username && addUser(action.username);
             break;
@@ -93,17 +119,10 @@ export const useAssistant = () => {
             break;
           case 'rename_user':
             action.username &&
-              action.newUsername &&
-              renameUser(action.username, action.newUsername);
+            action.newUsername &&
+            renameUser(action.username, action.newUsername);
             break;
-          case 'increase_user_level':
-            action.username && changeLevel(action.username, +1);
-            console.log('decrease_user_level', action.username, action);
-            break;
-          case 'decrease_user_level':
-            action.username && changeLevel(action.username, -1);
-            console.log('decrease_user_level', action.username);
-            break;
+          // Power
           case 'increase_user_power':
             if (action.username && action.power != null) {
               const delta = Number(action.power);
@@ -124,6 +143,15 @@ export const useAssistant = () => {
               }
             }
             break;
+          // Level
+          case 'increase_user_level':
+            action.username && changeLevel(action.username, +1);
+            console.log('decrease_user_level', action.username, action);
+            break;
+          case 'decrease_user_level':
+            action.username && changeLevel(action.username, -1);
+            console.log('decrease_user_level', action.username);
+            break;
           default:
             console.warn('Unknown action:', action.type);
         }
@@ -142,7 +170,7 @@ export const useAssistant = () => {
   const getState = useCallback<() => AppState>(
     () => ({
       item_selector: {
-        items: users.map(({ username, level, power }) => ({
+        items: users.map(({username, level, power}) => ({
           username, // всё ещё lowercase
           level,
           power,
@@ -169,7 +197,7 @@ export const useAssistant = () => {
   useEffect(() => {
     const assistant = initializeAssistant(getState);
     assistantRef.current = assistant;
-    assistant.on('data', ({ action }: any) => {
+    assistant.on('data', ({action}: any) => {
       action && dispatchAssistantAction(action);
     });
     assistant.on('start', () =>

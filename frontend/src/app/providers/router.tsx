@@ -3,11 +3,16 @@ import { AppLayout } from '@app/layouts/AppLayout.tsx';
 import { GamePage } from '@pages/game/Page.tsx';
 import { MenuPage } from '@pages/menu/Page.tsx';
 import { SupportPage } from '@pages/support/Page';
+import { GameProvider } from '@app/providers/GameProvider.tsx';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    Component: AppLayout,
+    element: (
+      <GameProvider>
+        <AppLayout/>
+      </GameProvider>
+    ),
     children: [
       // Menu
       {

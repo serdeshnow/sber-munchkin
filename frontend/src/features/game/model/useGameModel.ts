@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useAssistant } from '@features/assistant';
 import { names } from '@features/game';
+import { useNavigate } from 'react-router';
 
-export const useGameModel = () => {
+export const useGameModel = (navigate: ReturnType<typeof useNavigate>) => {
   const { users, addUser, deleteUser, renameUser, resetGame, changeLevel, changePower } =
-    useAssistant();
+    useAssistant(navigate);
 
   // ---- ConfirmModal state ----
   const [confirm, setConfirm] = useState<{

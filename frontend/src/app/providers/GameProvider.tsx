@@ -1,5 +1,6 @@
 import React, { createContext, useContext, ReactNode } from 'react';
 import { useGameModel } from '@features/game';
+import { useNavigate } from 'react-router';
 
 // Тип возвращаемого значения вашего хука
 type GameContextType = ReturnType<typeof useGameModel>;
@@ -7,7 +8,8 @@ type GameContextType = ReturnType<typeof useGameModel>;
 const GameContext = createContext<GameContextType | null>(null);
 
 export const GameProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const game = useGameModel();
+  const navigate = useNavigate();
+  const game = useGameModel(navigate);
   return <GameContext.Provider value={game}>{children}</GameContext.Provider>;
 };
 

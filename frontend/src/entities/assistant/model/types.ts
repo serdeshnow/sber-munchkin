@@ -18,7 +18,9 @@ export type ActionType =
   | 'increase_user_level'
   | 'decrease_user_level'
   | 'increase_user_power'
-  | 'decrease_user_power';
+  | 'decrease_user_power'
+  | 'go_to_game'
+  | 'go_to_support';
 
 export interface AssistantAction {
   type: ActionType;

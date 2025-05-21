@@ -13,7 +13,7 @@ export const initializeAssistant = (
       initPhrase: `Запусти ${import.meta.env.VITE_APP_SMARTAPP}`,
       getState,
       nativePanel: {
-        defaultText: 'Добавить Бард',
+        defaultText: 'Начать',
         screenshotMode: false,
         tabIndex: -1,
       },
