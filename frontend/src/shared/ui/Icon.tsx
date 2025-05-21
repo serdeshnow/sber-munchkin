@@ -48,19 +48,18 @@ const iconMap: Record<IconType, React.FC<React.SVGProps<SVGSVGElement>>> = {
   resume: ResumeIcon,
 };
 
-export const Icon: React.FC<IconProps> = (
-  {
-    type,
-    className = '',
-    svgClassName = '',
-    size = 24,
-    color = 'currentColor',
-    stroke = 'currentColor',
-    activeColor = '#000',
-    activeStroke = '#000',
-    active = false,
-    border = false,
-  }) => {
+export const Icon: React.FC<IconProps> = ({
+  type,
+  className = '',
+  svgClassName = '',
+  size = 24,
+  color = 'currentColor',
+  stroke = 'currentColor',
+  activeColor = '#000',
+  activeStroke = '#000',
+  active = false,
+  border = false,
+}) => {
   const SvgIcon = iconMap[type];
 
   return (

@@ -13,13 +13,11 @@ export const Menu: React.FC = () => {
       <Button
         onClick={() => navigate('/game')}
         className="min-w-3xs w-auto justify-start text-2xl h-auto text-center"
-        startContent={<Icon type={
-          game.users === initialUsersState ? ('plus') : ('resume')
-        } />}
-      >
-        {
-          game.users === initialUsersState ? ('Начать игру') : ('Играть')
+        startContent={
+          <Icon type={game.users === initialUsersState ? 'plus' : 'resume'} />
         }
+      >
+        {game.users === initialUsersState ? 'Начать игру' : 'Играть'}
       </Button>
       <Button
         onClick={() => navigate('/support')}

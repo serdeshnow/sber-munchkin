@@ -8,7 +8,7 @@ import '@styles/index.css';
 createRoot(document.getElementById('root')!).render(
   <HeroUIProvider>
     <GameProvider>
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </GameProvider>
   </HeroUIProvider>,
 );

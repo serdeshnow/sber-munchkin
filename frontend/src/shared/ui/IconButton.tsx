@@ -3,18 +3,18 @@ import cn from 'classnames';
 import { Button, ButtonProps } from '@shared/ui';
 import { Icon, IconType, IconProps } from '@shared/ui';
 
-export interface IconButtonProps extends Omit<ButtonProps, 'children' | 'startContentIcon'> {
+export interface IconButtonProps
+  extends Omit<ButtonProps, 'children' | 'startContentIcon'> {
   icon: IconType;
   iconProps?: Omit<IconProps, 'type' | 'size'>;
 }
 
-export const IconButton: React.FC<IconButtonProps> = (
-  {
-    icon,
-    iconProps,
-    className,
-    ...buttonProps
-  }) => {
+export const IconButton: React.FC<IconButtonProps> = ({
+  icon,
+  iconProps,
+  className,
+  ...buttonProps
+}) => {
   return (
     <Button
       {...buttonProps}

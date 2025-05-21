@@ -19,5 +19,5 @@ export const initializeAssistant = (
       },
     });
   }
-  return createAssistant({getState});
+  return createAssistant({ getState });
 };

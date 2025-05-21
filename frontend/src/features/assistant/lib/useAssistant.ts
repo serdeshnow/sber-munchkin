@@ -16,12 +16,12 @@ export const useAssistant = () => {
 
   // --- CRUD с нормализацией имён при добавлении и переименовании ---
   const resetGame = useCallback(() => {
-    setUsers(prev => prev.map(u => ({ ...u, level: 1, power: 1 })));
+    setUsers((prev) => prev.map((u) => ({ ...u, level: 1, power: 1 })));
   }, []);
 
   const addUser = useCallback((username: string) => {
     const name = username.toLowerCase();
-    setUsers(prev => {
+    setUsers((prev) => {
       if (prev.length >= 7) throw new Error('MaxPlayers');
       return [...prev, { username: name, level: 1, power: 1 }];
     });
@@ -29,21 +29,21 @@ export const useAssistant = () => {
 
   const deleteUser = useCallback((username: string) => {
     const name = username.toLowerCase();
-    setUsers(prev => prev.filter(u => u.username !== name));
+    setUsers((prev) => prev.filter((u) => u.username !== name));
   }, []);
 
   const renameUser = useCallback((username: string, newUsername: string) => {
     const from = username.toLowerCase();
     const to = newUsername.toLowerCase();
-    setUsers(prev =>
-      prev.map(u => (u.username === from ? { ...u, username: to } : u))
+    setUsers((prev) =>
+      prev.map((u) => (u.username === from ? { ...u, username: to } : u)),
     );
   }, []);
 
   const changeLevel = useCallback((username: string, delta: number) => {
     const name = username.toLowerCase();
-    setUsers(prev =>
-      prev.map(u => {
+    setUsers((prev) =>
+      prev.map((u) => {
         if (u.username !== name) return u;
         const newLevel = Math.max(1, u.level + delta);
 
@@ -57,19 +57,19 @@ export const useAssistant = () => {
           level: newLevel,
           power: newPower,
         };
-      })
+      }),
     );
   }, []);
 
   const changePower = useCallback((username: string, delta: number) => {
     if (Number.isNaN(delta)) return;
     const name = username.toLowerCase();
-    setUsers(prev =>
-      prev.map(u => {
+    setUsers((prev) =>
+      prev.map((u) => {
         if (u.username !== name) return u;
         const newPower = Math.max(0, u.power + delta);
         return { ...u, power: newPower };
-      })
+      }),
     );
   }, []);
 
@@ -93,8 +93,8 @@ export const useAssistant = () => {
             break;
           case 'rename_user':
             action.username &&
-            action.newUsername &&
-            renameUser(action.username, action.newUsername);
+              action.newUsername &&
+              renameUser(action.username, action.newUsername);
             break;
           case 'increase_user_level':
             action.username && changeLevel(action.username, +1);
@@ -135,7 +135,7 @@ export const useAssistant = () => {
         }
       }
     },
-    [resetGame, addUser, deleteUser, renameUser, changeLevel, changePower]
+    [resetGame, addUser, deleteUser, renameUser, changeLevel, changePower],
   );
 
   // состояние для ассистента
@@ -148,12 +148,21 @@ export const useAssistant = () => {
           power,
         })),
         ignored_words: [
-          'добавить','установить','запиши','поставь','закинь',
-          'напомнить','удалить','удали','выполни','выполнил','сделал',
+          'добавить',
+          'установить',
+          'запиши',
+          'поставь',
+          'закинь',
+          'напомнить',
+          'удалить',
+          'удали',
+          'выполни',
+          'выполнил',
+          'сделал',
         ],
       },
     }),
-    [users]
+    [users],
   );
 
   // инициализация ассистента
@@ -164,7 +173,7 @@ export const useAssistant = () => {
       action && dispatchAssistantAction(action);
     });
     assistant.on('start', () =>
-      console.log('assistant.start', assistant.getInitialData())
+      console.log('assistant.start', assistant.getInitialData()),
     );
     assistant.on('error', console.error);
     return () => {
@@ -175,11 +184,11 @@ export const useAssistant = () => {
   // для UI: копируем users, но делаем username с заглавной буквы
   const displayedUsers = useMemo(
     () =>
-      users.map(u => ({
+      users.map((u) => ({
         ...u,
         username: u.username.charAt(0).toUpperCase() + u.username.slice(1),
       })),
-    [users]
+    [users],
   );
 
   return {

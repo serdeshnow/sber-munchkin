@@ -7,7 +7,11 @@ export const useGameModel = () => {
     useAssistant();
 
   // ---- ConfirmModal state ----
-  const [confirm, setConfirm] = useState<{ type: 'reset' | 'delete'; username?: string; open: boolean }>({
+  const [confirm, setConfirm] = useState<{
+    type: 'reset' | 'delete';
+    username?: string;
+    open: boolean;
+  }>({
     type: 'reset',
     open: false,
   });
